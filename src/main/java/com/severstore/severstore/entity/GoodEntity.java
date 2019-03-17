@@ -1,6 +1,7 @@
 package com.severstore.severstore.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -51,5 +52,21 @@ public class GoodEntity {
 
     public void setOrderLineEntities(Set<OrderLineEntity> orderLineEntities) {
         this.orderLineEntities = orderLineEntities;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GoodEntity that = (GoodEntity) o;
+        return id == that.id &&
+                Double.compare(that.price, price) == 0 &&
+                name.equals(that.name) &&
+                orderLineEntities.equals(that.orderLineEntities);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, orderLineEntities);
     }
 }

@@ -1,6 +1,7 @@
 package com.severstore.severstore.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ORDER_LINE")
@@ -49,5 +50,21 @@ public class OrderLineEntity {
 
     public void setGoodEntity(GoodEntity goodEntity) {
         this.goodEntity = goodEntity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderLineEntity that = (OrderLineEntity) o;
+        return id == that.id &&
+                count == that.count &&
+                orderEntity.equals(that.orderEntity) &&
+                goodEntity.equals(that.goodEntity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, count, orderEntity, goodEntity);
     }
 }

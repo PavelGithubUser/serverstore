@@ -2,6 +2,7 @@ package com.severstore.severstore.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -62,5 +63,22 @@ public class OrderEntity {
 
     public void setOrderLineEntities(Set<OrderLineEntity> orderLineEntities) {
         this.orderLineEntities = orderLineEntities;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderEntity that = (OrderEntity) o;
+        return id == that.id &&
+                client.equals(that.client) &&
+                date.equals(that.date) &&
+                address.equals(that.address) &&
+                orderLineEntities.equals(that.orderLineEntities);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, client, date, address, orderLineEntities);
     }
 }
