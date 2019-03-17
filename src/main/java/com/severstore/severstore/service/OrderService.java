@@ -12,6 +12,6 @@ public interface OrderService {
 
     OrderEntity save(OrderEntity orderEntity);
 
-    boolean delete(OrderEntity orderEntity);
+    boolean deleteById(Long idOrder);
 
 }
