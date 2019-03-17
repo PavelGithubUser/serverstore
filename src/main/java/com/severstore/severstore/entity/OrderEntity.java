@@ -2,14 +2,17 @@ package com.severstore.severstore.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
-@Table(name = "ORDER")
+@Table(name = "ORDERS")
 public class OrderEntity {
     private long id;
     private String client;
     private Date date;
     private String address;
+
+    private Set<OrderLineEntity> orderLineEntities;
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -44,7 +47,7 @@ public class OrderEntity {
 
     @Basic
     @Column(name = "ADDRESS")
-    public String setAddress() {
+    public String getAddress() {
         return address;
     }
 
@@ -52,4 +55,12 @@ public class OrderEntity {
         this.address = address;
     }
 
+    @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL)
+    public Set<OrderLineEntity> getOrderLineEntities() {
+        return orderLineEntities;
+    }
+
+    public void setOrderLineEntities(Set<OrderLineEntity> orderLineEntities) {
+        this.orderLineEntities = orderLineEntities;
+    }
 }

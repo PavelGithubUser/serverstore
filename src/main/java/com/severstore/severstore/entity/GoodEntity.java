@@ -1,6 +1,7 @@
 package com.severstore.severstore.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "GOODS")
@@ -8,6 +9,8 @@ public class GoodEntity {
     private long id;
     private String name;
     private double price;
+
+    private Set<OrderLineEntity> orderLineEntities;
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -41,4 +44,12 @@ public class GoodEntity {
         this.price = price;
     }
 
+    @OneToMany(mappedBy = "goodEntity")
+    public Set<OrderLineEntity> getOrderLineEntities() {
+        return orderLineEntities;
+    }
+
+    public void setOrderLineEntities(Set<OrderLineEntity> orderLineEntities) {
+        this.orderLineEntities = orderLineEntities;
+    }
 }
