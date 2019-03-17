@@ -12,6 +12,6 @@ public interface GoodService {
 
     GoodEntity save(GoodEntity goodEntity);
 
-    void delete(GoodEntity goodEntity);
+    boolean delete(GoodEntity goodEntity);
 
 }

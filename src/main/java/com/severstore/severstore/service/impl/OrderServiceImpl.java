@@ -30,7 +30,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void delete(OrderEntity orderEntity) {
-        orderRepository.delete(orderEntity);
+    public boolean delete(OrderEntity orderEntity) {
+        try {
+            orderRepository.delete(orderEntity);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -30,7 +30,13 @@ public class GoodServiceImpl implements GoodService {
     }
 
     @Override
-    public void delete(GoodEntity goodEntity) {
-        goodRepository.delete(goodEntity);
+    public boolean delete(GoodEntity goodEntity) {
+        try {
+            goodRepository.delete(goodEntity);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

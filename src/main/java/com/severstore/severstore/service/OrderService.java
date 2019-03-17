@@ -12,6 +12,6 @@ public interface OrderService {
 
     OrderEntity save(OrderEntity orderEntity);
 
-    void delete(OrderEntity orderEntity);
+    boolean delete(OrderEntity orderEntity);
 
 }
