@@ -3,7 +3,7 @@ package com.severstore.severstore.entity;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
@@ -13,7 +13,7 @@ public class OrderEntity {
     private Date date;
     private String address;
 
-    private Set<OrderLineEntity> orderLineEntities;
+    private List<OrderLineEntity> orderLineEntities;
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -57,11 +57,11 @@ public class OrderEntity {
     }
 
     @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL)
-    public Set<OrderLineEntity> getOrderLineEntities() {
+    public List<OrderLineEntity> getOrderLineEntities() {
         return orderLineEntities;
     }
 
-    public void setOrderLineEntities(Set<OrderLineEntity> orderLineEntities) {
+    public void setOrderLineEntities(List<OrderLineEntity> orderLineEntities) {
         this.orderLineEntities = orderLineEntities;
     }
 
@@ -73,12 +73,11 @@ public class OrderEntity {
         return id == that.id &&
                 client.equals(that.client) &&
                 date.equals(that.date) &&
-                address.equals(that.address) &&
-                orderLineEntities.equals(that.orderLineEntities);
+                address.equals(that.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, client, date, address, orderLineEntities);
+        return Objects.hash(id, client, date, address);
     }
 }

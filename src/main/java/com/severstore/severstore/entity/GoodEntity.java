@@ -1,8 +1,8 @@
 package com.severstore.severstore.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "GOODS")
@@ -11,7 +11,7 @@ public class GoodEntity {
     private String name;
     private double price;
 
-    private Set<OrderLineEntity> orderLineEntities;
+    private List<OrderLineEntity> orderLineEntities;
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -46,11 +46,11 @@ public class GoodEntity {
     }
 
     @OneToMany(mappedBy = "goodEntity")
-    public Set<OrderLineEntity> getOrderLineEntities() {
+    public List<OrderLineEntity> getOrderLineEntities() {
         return orderLineEntities;
     }
 
-    public void setOrderLineEntities(Set<OrderLineEntity> orderLineEntities) {
+    public void setOrderLineEntities(List<OrderLineEntity> orderLineEntities) {
         this.orderLineEntities = orderLineEntities;
     }
 
@@ -61,12 +61,11 @@ public class GoodEntity {
         GoodEntity that = (GoodEntity) o;
         return id == that.id &&
                 Double.compare(that.price, price) == 0 &&
-                name.equals(that.name) &&
-                orderLineEntities.equals(that.orderLineEntities);
+                name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, orderLineEntities);
+        return Objects.hash(id, name, price);
     }
 }
