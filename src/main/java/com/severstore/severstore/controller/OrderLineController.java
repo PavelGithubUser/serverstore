@@ -2,7 +2,9 @@ package com.severstore.severstore.controller;
 
 import com.severstore.severstore.dto.OrderLineDTO;
 import com.severstore.severstore.entity.OrderLineEntity;
+import com.severstore.severstore.service.GoodService;
 import com.severstore.severstore.service.OrderLineService;
+import com.severstore.severstore.service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,12 @@ import java.util.stream.Collectors;
 public class OrderLineController {
 
     @Autowired
+    GoodService goodService;
+
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
     OrderLineService orderLineService;
 
     @GetMapping(value = "/get/{id}")
@@ -27,6 +35,8 @@ public class OrderLineController {
     public void save(@RequestBody OrderLineDTO orderLineDTO){
         ModelMapper modelMapper = new ModelMapper();
         OrderLineEntity orderLineEntity = modelMapper.map(orderLineDTO, OrderLineEntity.class);
+        orderLineEntity.setGoodEntity(goodService.getById(orderLineDTO.getIdGoodEntity()));
+        orderLineEntity.setOrderEntity(orderService.getById(orderLineDTO.getIdOrderEntity()));
         modelMapper.map(orderLineService.save(orderLineEntity), OrderLineDTO.class);
     }
 
