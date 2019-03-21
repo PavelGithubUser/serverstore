@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/good")
 public class GoodController {
@@ -23,15 +24,15 @@ public class GoodController {
     }
 
     @PostMapping(value = "/save")
-    public GoodDTO save(@RequestBody GoodDTO goodDTO){
+    public void save(@RequestBody GoodDTO goodDTO) {
         ModelMapper modelMapper = new ModelMapper();
         GoodEntity goodEntity = modelMapper.map(goodDTO, GoodEntity.class);
-        return modelMapper.map(goodService.save(goodEntity), GoodDTO.class);
+        modelMapper.map(goodService.save(goodEntity), GoodDTO.class);
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public boolean deleteById(@PathVariable("id") Long id){
-        return goodService.deleteById(id);
+    public void deleteById(@PathVariable("id") Long id){
+        goodService.deleteById(id);
     }
 
     @GetMapping(value = "/all")

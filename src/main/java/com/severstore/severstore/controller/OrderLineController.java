@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/orderline")
 public class OrderLineController {
@@ -23,15 +24,15 @@ public class OrderLineController {
     }
 
     @PostMapping(value = "/save")
-    public OrderLineDTO save(@RequestBody OrderLineDTO orderLineDTO){
+    public void save(@RequestBody OrderLineDTO orderLineDTO){
         ModelMapper modelMapper = new ModelMapper();
         OrderLineEntity orderLineEntity = modelMapper.map(orderLineDTO, OrderLineEntity.class);
-        return modelMapper.map(orderLineService.save(orderLineEntity), OrderLineDTO.class);
+        modelMapper.map(orderLineService.save(orderLineEntity), OrderLineDTO.class);
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public boolean deleteById(@PathVariable("id") Long id){
-        return orderLineService.deleteById(id);
+    public void deleteById(@PathVariable("id") Long id){
+        orderLineService.deleteById(id);
     }
 
     @GetMapping(value = "/all")
