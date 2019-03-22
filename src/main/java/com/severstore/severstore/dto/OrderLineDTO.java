@@ -4,7 +4,7 @@ public class OrderLineDTO {
     private long id;
     private long count;
     private long idOrderEntity;
-    private long idGoodEntity;
+    private GoodDTO goodDTO;
 
     public long getId() {
         return id;
@@ -30,11 +30,11 @@ public class OrderLineDTO {
         this.idOrderEntity = idOrderEntity;
     }
 
-    public long getIdGoodEntity() {
-        return idGoodEntity;
+    public GoodDTO getGoodDTO() {
+        return goodDTO;
     }
 
-    public void setIdGoodEntity(long idGoodEntity) {
-        this.idGoodEntity = idGoodEntity;
+    public void setGoodDTO(GoodDTO goodDTO) {
+        this.goodDTO = goodDTO;
     }
 }
