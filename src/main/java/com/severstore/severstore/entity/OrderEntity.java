@@ -32,7 +32,7 @@ public class OrderEntity {
         return client;
     }
 
-    public void setClient(String nikname) {
+    public void setClient(String client) {
         this.client = client;
     }
 
