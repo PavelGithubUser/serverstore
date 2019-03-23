@@ -1,5 +1,6 @@
 package com.severstore.severstore.service.impl;
 
+import com.severstore.severstore.dao.OrderLineRepository;
 import com.severstore.severstore.dao.OrderRepository;
 import com.severstore.severstore.entity.OrderEntity;
 import com.severstore.severstore.service.OrderService;
@@ -13,6 +14,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    OrderLineRepository orderLineRepository;
 
     @Override
     public OrderEntity getById(Long idOrder) {
@@ -32,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean deleteById(Long idOrder){
         try {
+            orderLineRepository.deleteAll(orderRepository.findById(idOrder).get().getOrderLineEntities());
             orderRepository.deleteById(idOrder);
             return true;
         } catch (Exception e) {

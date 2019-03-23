@@ -1,6 +1,7 @@
 package com.severstore.severstore.service.impl;
 
 import com.severstore.severstore.dao.GoodRepository;
+import com.severstore.severstore.dao.OrderLineRepository;
 import com.severstore.severstore.dao.OrderRepository;
 import com.severstore.severstore.entity.GoodEntity;
 import com.severstore.severstore.service.GoodService;
@@ -18,6 +19,9 @@ public class GoodServiceImpl implements GoodService {
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    OrderLineRepository orderLineRepository;
 
     @Override
     public GoodEntity getById(Long idGood) {
@@ -37,6 +41,7 @@ public class GoodServiceImpl implements GoodService {
     @Override
     public boolean deleteById(Long idGood) {
         try {
+            orderLineRepository.deleteAll(goodRepository.findById(idGood).get().getOrderLineEntities());
             goodRepository.deleteById(idGood);
             return true;
         } catch (Exception e) {
