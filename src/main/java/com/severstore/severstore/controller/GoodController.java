@@ -44,4 +44,13 @@ public class GoodController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping(value = "/allnotaddtoorder/{id}")
+    public List<GoodDTO> getAllNotAddToOrder(@PathVariable("id") Long id){
+        ModelMapper modelMapper = new ModelMapper();
+        return goodService.getAllNotAddToOrder(id)
+                .stream()
+                .map(goodEntity -> modelMapper.map(goodEntity, GoodDTO.class))
+                .collect(Collectors.toList());
+    }
+
 }

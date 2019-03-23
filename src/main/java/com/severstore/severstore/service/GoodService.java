@@ -12,6 +12,8 @@ public interface GoodService {
 
     GoodEntity save(GoodEntity goodEntity);
 
-    boolean deleteById(Long idGood);
+    boolean deleteById(Long goodId);
+
+    List<GoodEntity> getAllNotAddToOrder(Long orderId);
 
 }
