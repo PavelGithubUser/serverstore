@@ -7,6 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,10 +26,11 @@ public class OrderController {
     }
 
     @PostMapping(value = "/save")
-    public void save(@RequestBody OrderDTO orderDTO){
+    public OrderDTO save(@RequestBody OrderDTO orderDTO){
         ModelMapper modelMapper = new ModelMapper();
         OrderEntity orderEntity = modelMapper.map(orderDTO, OrderEntity.class);
-        modelMapper.map(orderService.save(orderEntity), OrderDTO.class);
+        orderEntity.setDate(new Date(Calendar.getInstance().getTime().getTime()));
+        return modelMapper.map(orderService.save(orderEntity), OrderDTO.class);
     }
 
     @DeleteMapping(value = "/delete/{id}")
