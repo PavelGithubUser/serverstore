@@ -1,5 +1,6 @@
 package com.severstore.severstore.controller;
 
+import com.severstore.severstore.dto.GoodDTO;
 import com.severstore.severstore.dto.OrderLineDTO;
 import com.severstore.severstore.entity.OrderLineEntity;
 import com.severstore.severstore.service.GoodService;
@@ -28,16 +29,20 @@ public class OrderLineController {
 
     @GetMapping(value = "/get/{id}")
     public OrderLineDTO getOrderLineById(@PathVariable("id") Long id){
-        return new ModelMapper().map(orderLineService.getById(id), OrderLineDTO.class);
+        ModelMapper modelMapper = new ModelMapper();
+        OrderLineEntity orderLineEntity = orderLineService.getById(id);
+        OrderLineDTO orderLineDTO = modelMapper.map(orderLineEntity, OrderLineDTO.class);
+        orderLineDTO.setGoodDTO(modelMapper.map(orderLineEntity.getGoodEntity(), GoodDTO.class));
+        return orderLineDTO;
     }
 
     @PostMapping(value = "/save")
     public void save(@RequestBody OrderLineDTO orderLineDTO){
         ModelMapper modelMapper = new ModelMapper();
         OrderLineEntity orderLineEntity = modelMapper.map(orderLineDTO, OrderLineEntity.class);
-        orderLineEntity.setGoodEntity(goodService.getById(orderLineDTO.getIdGoodEntity()));
         orderLineEntity.setOrderEntity(orderService.getById(orderLineDTO.getIdOrderEntity()));
-        modelMapper.map(orderLineService.save(orderLineEntity), OrderLineDTO.class);
+        orderLineEntity.setGoodEntity(goodService.getById(orderLineDTO.getGoodDTO().getId()));
+        orderLineService.save(orderLineEntity);
     }
 
     @DeleteMapping(value = "/delete/{id}")
@@ -46,11 +51,27 @@ public class OrderLineController {
     }
 
     @GetMapping(value = "/all")
-    public List<OrderLineDTO> getOrderLinesList(){
+    public List<OrderLineDTO> getOrderLineList(){
         ModelMapper modelMapper = new ModelMapper();
         return orderLineService.getAll()
                 .stream()
                 .map(orderLineEntity -> modelMapper.map(orderLineEntity, OrderLineDTO.class))
                 .collect(Collectors.toList());
     }
+
+    @GetMapping(value = "/allbyorder/{id}")
+    public List<OrderLineDTO> getOrderLineListByOrder(@PathVariable("id") Long id){
+        ModelMapper modelMapper = new ModelMapper();
+        List<OrderLineEntity> orderLineEntitys = orderService.getById(id).getOrderLineEntities();
+        List<OrderLineDTO> orderLinesDTO = orderLineEntitys
+                .stream()
+                .map(orderLineEntity -> {
+                    OrderLineDTO orderLineDTO = modelMapper.map(orderLineEntity, OrderLineDTO.class);
+                    orderLineDTO.setGoodDTO(modelMapper.map(orderLineEntity.getGoodEntity(), GoodDTO.class));
+                    return orderLineDTO;
+                })
+                .collect(Collectors.toList());
+        return orderLinesDTO;
+    }
+
 }
