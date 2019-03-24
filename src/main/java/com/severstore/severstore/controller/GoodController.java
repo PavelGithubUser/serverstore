@@ -24,10 +24,10 @@ public class GoodController {
     }
 
     @PostMapping(value = "/save")
-    public void save(@RequestBody GoodDTO goodDTO) {
+    public GoodDTO save(@RequestBody GoodDTO goodDTO) {
         ModelMapper modelMapper = new ModelMapper();
         GoodEntity goodEntity = modelMapper.map(goodDTO, GoodEntity.class);
-        modelMapper.map(goodService.save(goodEntity), GoodDTO.class);
+        return modelMapper.map(goodService.save(goodEntity), GoodDTO.class);
     }
 
     @DeleteMapping(value = "/delete/{id}")
