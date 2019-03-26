@@ -9,6 +9,17 @@ public class OrderDTO {
     private Date date;
     private String address;
 
+    public OrderDTO() {
+
+    }
+
+    public OrderDTO(long id, String client, Date date, String address) {
+        this.id = id;
+        this.client = client;
+        this.date = date;
+        this.address = address;
+    }
+
     public long getId() {
         return id;
     }

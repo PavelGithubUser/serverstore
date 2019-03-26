@@ -6,6 +6,17 @@ public class OrderLineDTO {
     private long idOrderEntity;
     private GoodDTO goodDTO;
 
+    public OrderLineDTO() {
+
+    }
+
+    public OrderLineDTO(long id, long count, long idOrderEntity, GoodDTO goodDTO) {
+        this.id = id;
+        this.count = count;
+        this.idOrderEntity = idOrderEntity;
+        this.goodDTO = goodDTO;
+    }
+
     public long getId() {
         return id;
     }
