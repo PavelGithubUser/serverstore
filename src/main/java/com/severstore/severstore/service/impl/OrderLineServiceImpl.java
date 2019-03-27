@@ -1,12 +1,18 @@
 package com.severstore.severstore.service.impl;
 
+import com.severstore.severstore.dao.GoodRepository;
 import com.severstore.severstore.dao.OrderLineRepository;
+import com.severstore.severstore.dao.OrderRepository;
+import com.severstore.severstore.dto.GoodDTO;
+import com.severstore.severstore.dto.OrderLineDTO;
 import com.severstore.severstore.entity.OrderLineEntity;
 import com.severstore.severstore.service.OrderLineService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderLineServiceImpl implements OrderLineService {
@@ -14,29 +20,64 @@ public class OrderLineServiceImpl implements OrderLineService {
     @Autowired
     OrderLineRepository orderLineRepository;
 
+//    @Autowired
+//    GoodService goodService;
+//
+//    @Autowired
+//    OrderService orderService;
+
+    @Autowired
+    OrderRepository orderRepository;
+
+    @Autowired
+    GoodRepository goodRepository;
+
     @Override
-    public OrderLineEntity getById(Long idOrderLine) {
-        return orderLineRepository.findById(idOrderLine).get();
+    public OrderLineDTO getById(Long orderLineId) {
+        return new ModelMapper().map(orderLineRepository.findById(orderLineId).get(), OrderLineDTO.class);
     }
 
     @Override
-    public List<OrderLineEntity> getAll() {
-        return orderLineRepository.findAll();
+    public List<OrderLineDTO> getAll() {
+        ModelMapper modelMapper = new ModelMapper();
+        return orderLineRepository.findAll()
+                .stream()
+                .map(orderLineEntity -> modelMapper.map(orderLineEntity, OrderLineDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public OrderLineEntity save(OrderLineEntity orderEntity) {
-        return orderLineRepository.save(orderEntity);
+    public OrderLineDTO save(OrderLineDTO orderLineDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        OrderLineEntity orderLineEntity = modelMapper.map(orderLineDTO, OrderLineEntity.class);
+        orderLineEntity.setOrderEntity(orderRepository.findById(orderLineDTO.getIdOrderEntity()).get());
+        orderLineEntity.setGoodEntity(goodRepository.findById(orderLineDTO.getGoodDTO().getId()).get());
+        return new ModelMapper().map(orderLineRepository.save(orderLineEntity), OrderLineDTO.class);
     }
 
     @Override
-    public boolean deleteById(Long idOrderLine){
+    public boolean deleteById(Long orderLineId){
         try {
-            orderLineRepository.deleteById(idOrderLine);
+            orderLineRepository.deleteById(orderLineId);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
+
+    public List<OrderLineDTO> getOrderLineListByOrder(Long id) {
+        ModelMapper modelMapper = new ModelMapper();
+        List<OrderLineEntity> orderLineEntitys = orderRepository.findById(id).get().getOrderLineEntities();
+        List<OrderLineDTO> orderLinesDTO = orderLineEntitys
+                .stream()
+                .map(orderLineEntity -> {
+                    OrderLineDTO orderLineDTO = modelMapper.map(orderLineEntity, OrderLineDTO.class);
+                    orderLineDTO.setGoodDTO(modelMapper.map(orderLineEntity.getGoodEntity(), GoodDTO.class));
+                    return orderLineDTO;
+                })
+                .collect(Collectors.toList());
+        return orderLinesDTO;
+    }
+
 }

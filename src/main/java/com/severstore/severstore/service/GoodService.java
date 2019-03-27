@@ -1,19 +1,19 @@
 package com.severstore.severstore.service;
 
-import com.severstore.severstore.entity.GoodEntity;
+import com.severstore.severstore.dto.GoodDTO;
 
 import java.util.List;
 
 public interface GoodService {
 
-    GoodEntity getById(Long idGood);
+    GoodDTO getById(Long idGood);
 
-    List<GoodEntity> getAll();
+    List<GoodDTO> getAll();
 
-    GoodEntity save(GoodEntity goodEntity);
+    GoodDTO save(GoodDTO goodDTO);
 
     boolean deleteById(Long goodId);
 
-    List<GoodEntity> getAllNotAddToOrder(Long orderId);
+    List<GoodDTO> getAllNotAddToOrder(Long orderId);
 
 }

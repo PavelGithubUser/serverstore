@@ -1,17 +1,17 @@
 package com.severstore.severstore.service;
 
-import com.severstore.severstore.entity.OrderEntity;
+import com.severstore.severstore.dto.OrderDTO;
 
 import java.util.List;
 
 public interface OrderService {
 
-    OrderEntity getById(Long idOrder);
+    OrderDTO getById(Long orderId);
 
-    List<OrderEntity> getAll();
+    List<OrderDTO> getAll();
 
-    OrderEntity save(OrderEntity orderEntity);
+    OrderDTO save(OrderDTO orderDTO);
 
-    boolean deleteById(Long idOrder);
+    boolean deleteById(Long orderId);
 
 }
