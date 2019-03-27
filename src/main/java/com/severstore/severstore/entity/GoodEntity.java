@@ -13,6 +13,21 @@ public class GoodEntity {
 
     private List<OrderLineEntity> orderLineEntities;
 
+    public GoodEntity() {
+
+    }
+
+    public GoodEntity(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public GoodEntity(long id, String name, double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "ID")

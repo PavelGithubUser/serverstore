@@ -22,6 +22,23 @@ public class OrderEntity {
         return id;
     }
 
+    public OrderEntity() {
+
+    }
+
+    public OrderEntity(String client, Date date, String address) {
+        this.client = client;
+        this.date = date;
+        this.address = address;
+    }
+
+    public OrderEntity(long id, String client, Date date, String address) {
+        this.id = id;
+        this.client = client;
+        this.date = date;
+        this.address = address;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

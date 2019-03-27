@@ -11,6 +11,23 @@ public class OrderLineEntity {
     private OrderEntity orderEntity;
     private GoodEntity goodEntity;
 
+    public OrderLineEntity() {
+
+    }
+
+    public OrderLineEntity(long count, OrderEntity orderEntity, GoodEntity goodEntity) {
+        this.count = count;
+        this.orderEntity = orderEntity;
+        this.goodEntity = goodEntity;
+    }
+
+    public OrderLineEntity(long id, long count, OrderEntity orderEntity, GoodEntity goodEntity) {
+        this.id = id;
+        this.count = count;
+        this.orderEntity = orderEntity;
+        this.goodEntity = goodEntity;
+    }
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "ID")
