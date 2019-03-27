@@ -2,6 +2,7 @@
 package com.severstore.severstore.dto;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class OrderDTO {
     private long id;
@@ -50,5 +51,21 @@ public class OrderDTO {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderDTO orderDTO = (OrderDTO) o;
+        return id == orderDTO.id &&
+                Objects.equals(client, orderDTO.client) &&
+                Objects.equals(date, orderDTO.date) &&
+                Objects.equals(address, orderDTO.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, client, date, address);
     }
 }

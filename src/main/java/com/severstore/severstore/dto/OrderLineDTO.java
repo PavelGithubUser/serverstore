@@ -1,5 +1,7 @@
 package com.severstore.severstore.dto;
 
+import java.util.Objects;
+
 public class OrderLineDTO {
     private long id;
     private long count;
@@ -47,5 +49,21 @@ public class OrderLineDTO {
 
     public void setGoodDTO(GoodDTO goodDTO) {
         this.goodDTO = goodDTO;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderLineDTO that = (OrderLineDTO) o;
+        return id == that.id &&
+                count == that.count &&
+                idOrderEntity == that.idOrderEntity &&
+                Objects.equals(goodDTO, that.goodDTO);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, count, idOrderEntity, goodDTO);
     }
 }
