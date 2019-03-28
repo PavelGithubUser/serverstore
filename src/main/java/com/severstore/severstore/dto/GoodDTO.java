@@ -12,6 +12,12 @@ public class GoodDTO {
 
     }
 
+    public GoodDTO(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+
     public GoodDTO(long id, String name, double price) {
         this.id = id;
         this.name = name;
