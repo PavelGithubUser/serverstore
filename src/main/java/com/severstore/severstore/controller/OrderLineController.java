@@ -1,5 +1,6 @@
 package com.severstore.severstore.controller;
 
+import com.severstore.severstore.dto.GoodDTO;
 import com.severstore.severstore.dto.OrderLineDTO;
 import com.severstore.severstore.service.GoodService;
 import com.severstore.severstore.service.OrderLineService;
@@ -29,8 +30,8 @@ public class OrderLineController {
     }
 
     @PostMapping(value = "/save")
-    public void save(@RequestBody OrderLineDTO orderLineDTO){
-        orderLineService.save(orderLineDTO);
+    public OrderLineDTO save(@RequestBody OrderLineDTO orderLineDTO){
+        return orderLineService.save(orderLineDTO);
     }
 
     @DeleteMapping(value = "/delete/{id}")
