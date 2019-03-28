@@ -38,8 +38,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDTO save(OrderDTO orderDTO) {
         ModelMapper modelMapper = new ModelMapper();
-        OrderEntity goodEntity = modelMapper.map(orderDTO, OrderEntity.class);
-        return modelMapper.map(orderRepository.save(goodEntity), OrderDTO.class);
+        OrderEntity orderEntity = modelMapper.map(orderDTO, OrderEntity.class);
+        return modelMapper.map(orderRepository.save(orderEntity), OrderDTO.class);
     }
 
     @Override
