@@ -34,7 +34,12 @@ public class OrderLineServiceImpl implements OrderLineService {
 
     @Override
     public OrderLineDTO getById(Long orderLineId) {
-        return new ModelMapper().map(orderLineRepository.findById(orderLineId).get(), OrderLineDTO.class);
+        ModelMapper modelMapper = new ModelMapper();
+        OrderLineEntity orderLineEntity = orderLineRepository.findById(orderLineId).get();
+        OrderLineDTO orderLineDTO = modelMapper.map(orderLineEntity, OrderLineDTO.class);
+        orderLineDTO.setGoodDTO(modelMapper.map(orderLineEntity.getGoodEntity(), GoodDTO.class));
+        return orderLineDTO;
+//        return new ModelMapper().map(orderLineRepository.findById(orderLineId).get(), OrderLineDTO.class);
     }
 
     @Override
@@ -42,7 +47,11 @@ public class OrderLineServiceImpl implements OrderLineService {
         ModelMapper modelMapper = new ModelMapper();
         return orderLineRepository.findAll()
                 .stream()
-                .map(orderLineEntity -> modelMapper.map(orderLineEntity, OrderLineDTO.class))
+                .map(orderLineEntity -> {
+                    OrderLineDTO orderLineDTO = modelMapper.map(orderLineEntity, OrderLineDTO.class);
+                    orderLineDTO.setGoodDTO(modelMapper.map(orderLineEntity.getGoodEntity(), GoodDTO.class));
+                    return orderLineDTO;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -50,9 +59,12 @@ public class OrderLineServiceImpl implements OrderLineService {
     public OrderLineDTO save(OrderLineDTO orderLineDTO) {
         ModelMapper modelMapper = new ModelMapper();
         OrderLineEntity orderLineEntity = modelMapper.map(orderLineDTO, OrderLineEntity.class);
-        orderLineEntity.setOrderEntity(orderRepository.findById(orderLineDTO.getIdOrderEntity()).get());
+        orderLineEntity.setOrderEntity(orderRepository.findById(orderLineDTO.getorderEntityId()).get());
         orderLineEntity.setGoodEntity(goodRepository.findById(orderLineDTO.getGoodDTO().getId()).get());
-        return new ModelMapper().map(orderLineRepository.save(orderLineEntity), OrderLineDTO.class);
+
+        orderLineDTO = modelMapper.map(orderLineRepository.save(orderLineEntity), OrderLineDTO.class);
+        orderLineDTO.setGoodDTO(modelMapper.map(orderLineEntity.getGoodEntity(), GoodDTO.class));
+        return orderLineDTO;
     }
 
     @Override
