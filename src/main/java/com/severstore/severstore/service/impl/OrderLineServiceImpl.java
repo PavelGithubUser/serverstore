@@ -39,7 +39,6 @@ public class OrderLineServiceImpl implements OrderLineService {
         OrderLineDTO orderLineDTO = modelMapper.map(orderLineEntity, OrderLineDTO.class);
         orderLineDTO.setGoodDTO(modelMapper.map(orderLineEntity.getGoodEntity(), GoodDTO.class));
         return orderLineDTO;
-//        return new ModelMapper().map(orderLineRepository.findById(orderLineId).get(), OrderLineDTO.class);
     }
 
     @Override
