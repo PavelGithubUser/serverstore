@@ -5,17 +5,17 @@ import java.util.Objects;
 public class OrderLineDTO {
     private long id;
     private long count;
-    private long idOrderEntity;
+    private long orderEntityId;
     private GoodDTO goodDTO;
 
     public OrderLineDTO() {
 
     }
 
-    public OrderLineDTO(long id, long count, long idOrderEntity, GoodDTO goodDTO) {
+    public OrderLineDTO(long id, long count, long orderEntityId, GoodDTO goodDTO) {
         this.id = id;
         this.count = count;
-        this.idOrderEntity = idOrderEntity;
+        this.orderEntityId = orderEntityId;
         this.goodDTO = goodDTO;
     }
 
@@ -35,12 +35,12 @@ public class OrderLineDTO {
         this.count = count;
     }
 
-    public long getIdOrderEntity() {
-        return idOrderEntity;
+    public long getorderEntityId() {
+        return orderEntityId;
     }
 
-    public void setIdOrderEntity(long idOrderEntity) {
-        this.idOrderEntity = idOrderEntity;
+    public void setorderEntityId(long orderEntityId) {
+        this.orderEntityId = orderEntityId;
     }
 
     public GoodDTO getGoodDTO() {
@@ -58,12 +58,12 @@ public class OrderLineDTO {
         OrderLineDTO that = (OrderLineDTO) o;
         return id == that.id &&
                 count == that.count &&
-                idOrderEntity == that.idOrderEntity &&
+                orderEntityId == that.orderEntityId &&
                 Objects.equals(goodDTO, that.goodDTO);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, count, idOrderEntity, goodDTO);
+        return Objects.hash(id, count, orderEntityId, goodDTO);
     }
 }
