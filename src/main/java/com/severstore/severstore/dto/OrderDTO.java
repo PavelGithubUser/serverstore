@@ -60,7 +60,7 @@ public class OrderDTO {
         OrderDTO orderDTO = (OrderDTO) o;
         return id == orderDTO.id &&
                 Objects.equals(client, orderDTO.client) &&
-                Objects.equals(date, orderDTO.date) &&
+                Objects.equals(date.toString(), orderDTO.date.toString()) &&
                 Objects.equals(address, orderDTO.address);
     }
 
